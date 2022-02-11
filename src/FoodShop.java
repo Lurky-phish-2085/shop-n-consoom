@@ -7,4 +7,5 @@ public class FoodShop extends Shop {
 	public void stockFood(FoodItem food) {
 		getInventory().add(food);
 	}
+
 }
