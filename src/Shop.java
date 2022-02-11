@@ -10,8 +10,8 @@ public abstract class Shop {
 	private List<Item> inventory = new ArrayList<>();
 
 	public Shop(String name, String description) {
-		setName(name);
-		setDescription(description);
+		this.name = name;
+		this.description = description;
 	}
 
 	public String getName() {
