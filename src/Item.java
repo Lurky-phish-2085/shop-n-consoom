@@ -5,9 +5,9 @@ public abstract class Item {
 	private int price;
 
 	public Item(String name, String description, int price) {
-		setName(name);
-		setDescription(description);
-		setPrice(price);
+		this.name = name;
+		this.description = description;
+		this.price = price;
 	}
 
 	public String getName() {
