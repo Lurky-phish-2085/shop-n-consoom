@@ -7,6 +7,9 @@ public class Player {
 	private String name;
 	private int money;
 
+	private int hungerLevel = 50;
+	private int thirstLevel = 50;
+
 	private List<Item> inventory = new ArrayList<>();
 
 	public Player(String name, int money) {
@@ -37,6 +40,30 @@ public class Player {
 	public void buy(Item item, int itemPrice) {
 		money -= itemPrice;
 		getInventory().add(item);
+	}
+
+	public void eat(FoodItem food) {
+		int satietyLevel = food.getSatietyLevel();
+
+		if (getInventory().remove(food)) {
+			if (hungerLevel > satietyLevel) {
+				hungerLevel -= satietyLevel;
+			} else {
+				satietyLevel = 0;
+			}
+		}
+	}
+
+	public void drink(BeverageItem beverage) {
+		int quenchLevel = beverage.getQuenchLevel();
+
+		if (getInventory().remove(beverage)) {
+			if (thirstLevel > quenchLevel) {
+				thirstLevel -= quenchLevel;
+			} else {
+				thirstLevel = 0;
+			}
+		}
 	}
 
 }

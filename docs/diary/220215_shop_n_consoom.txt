@@ -1,0 +1,14 @@
+Tue, 15 Feb 2022 18:20:52 +0800
+
+Fixed Player Class and added BeverageItem extending the class Item.
+
+Similar to the FoodItem, but BeverageItem replaces satietyLevel with
+quenchLevel field.
+
+Player class has methods for eat() and drink(). They function the same but the
+only difference is that the former takes FoodItem parameter, and mutates the
+hungerLevel field, while the latter takes the beverageLevel parameter and
+mutates the thirstLevel field. Mutations are based from the Food/BeverageItem
+satietyLevel/beverageLevel of the taken parameters.
+
+
