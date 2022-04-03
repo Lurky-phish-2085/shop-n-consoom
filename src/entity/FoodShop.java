@@ -1,3 +1,5 @@
+package entity;
+
 public class FoodShop extends Shop {
 
 	public FoodShop(String name, String description) {
