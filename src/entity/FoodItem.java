@@ -1,3 +1,5 @@
+package entity;
+
 public class FoodItem extends Item {
 
 	private int satietyLevel;

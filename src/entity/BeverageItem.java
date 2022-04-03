@@ -1,3 +1,5 @@
+package entity;
+
 public class BeverageItem extends Item {
 
 	private int quenchLevel;
