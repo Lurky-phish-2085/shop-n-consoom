@@ -26,6 +26,14 @@ public class Player {
 		return money;
 	}
 
+	public int getHungerLevel() {
+		return hungerLevel;
+	}
+
+	public int getThirstLevel() {
+		return thirstLevel;
+	}
+
 	public List<Item> getInventory() {
 		return inventory;
 	}
