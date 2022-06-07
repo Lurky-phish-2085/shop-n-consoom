@@ -19,12 +19,13 @@ public class Game {
 	}
 
 	private static void welcomeMessage() {
-		System.out.println("Welcome to Shop-n-consoom BETA!\n");
+		System.out.println("Welcome to Shop-n-consoom PROTOTYPE!\n");
 	}
 
 	private static void initializePlayer() {
 		System.out.println("We have to know you first!\n");
 
+		// should be a boolean variable `ranOnce = true` and set it to false if choice not "y"
 		int i = 0;
 		while (true) {
 			if (i == 0) {
@@ -67,21 +68,192 @@ public class Game {
 		}
 	}
 
-	private static void playerInventory() {
-		clearScreen();
-		showPlayerStatus();
-
-		System.out.println("\n" + p1.getName().toUpperCase() + "'s INVENTORY");
+	private static void showFoodShopInventory() {
+		System.out.println("\nFOOD SHOP INVENTORY");
 		System.out.println("=========================");
 
-		for (int i = 0; i < p1.getInventory().size(); i++) {
-			System.out.println((i + 1) + ". " + p1.getInventory().get(i));
+		for (int i = 0; i < foodShop.getInventory().size(); i++) {
+				System.out.println((i + 1) + ". " + foodShop.getInventory().get(i));
 		}
-
+		
 		System.out.println("=========================");
+		
+	}
 
-		System.out.println("\nPress Enter to go back!");
-		in.nextLine();
+	private static void buyFood() throws InterruptedException {
+		while (true) {
+			clearScreen();
+			showPlayerStatus();
+
+			showFoodShopInventory();
+
+			System.out.println("\nEnter 0 to cancel");
+			System.out.print("\nWhich to buy? (item no. only) > ");
+
+			// Got stuck here
+			// I have to create a logic about buying things.
+			//
+			// 1. Check input string if only contains numbers
+			// 2. Convert it to an Int
+			// 3. Use that int minus by one as an index for the list
+			// 4. if int > list size then reject, else put in p1's inventory and deduct money
+			// 5. ask for input again
+
+			String choice = in.nextLine().trim();
+
+			// DEBUG
+			if (choice.matches("[0-9]+")) { // check if the String only contains numbers
+				int itemIndex = (Integer.parseInt(choice) - 1);
+
+				if (choice.equals("0")) {
+					break;
+				}
+
+				if (!(itemIndex >= foodShop.getInventory().size())) { 
+					Item item = foodShop.getInventory().get(itemIndex);
+
+					if (p1.buy(item)) {
+						System.out.println("You got: " + foodShop.getInventory().get(itemIndex));
+						Thread.sleep(350l);
+					} else {
+						System.out.println("You don't have enough money!");
+						Thread.sleep(350l);
+					}
+				} else {
+					System.out.println("No such item!");
+					Thread.sleep(350l);
+				}
+			} else {
+				System.out.println("Invalid input!");
+				Thread.sleep(350l);
+			}
+			// DEBUG
+		}
+	}
+
+	private static void enterFoodShop() throws InterruptedException {
+		boolean isInShop = true;
+
+		while (isInShop) {
+			clearScreen();
+			showPlayerStatus();
+		
+			showFoodShopInventory();
+
+			System.out.println("\nWhat would you like?\n");
+			System.out.println("1. Buy Food");
+			System.out.println("0. Quit shop");
+		
+			System.out.print("\n> ");
+		
+			switch (in.nextLine()) {
+				case "1":
+					buyFood();
+					break;
+				case "0":
+					isInShop = false;
+					break;
+				default:
+					System.out.println("No such option!");
+					Thread.sleep(350l);
+					break;
+			}
+		
+		}
+	}
+
+	private static void showPlayerInventory() {
+			System.out.println("\n" + p1.getName().toUpperCase() + "'s INVENTORY");
+			System.out.println("=========================");
+	
+			if (p1.getInventory().size() == 0) {
+				System.out.println("\tEMPTY");
+			}
+	
+			for (int i = 0; i < p1.getInventory().size(); i++) {
+				System.out.println((i + 1) + ". " + p1.getInventory().get(i));
+			}
+
+			System.out.println("=========================");
+
+	}
+
+	private static void consumeItem() throws InterruptedException {
+		while (true) {
+			clearScreen();
+			showPlayerStatus();
+
+			showPlayerInventory();
+	
+			if (p1.getInventory().size() == 0) {
+				System.out.println("\nNothing to consume...");
+				System.out.print("Press Enter to go back...");
+				in.nextLine();
+				return;
+			}
+
+			System.out.println("\nEnter 0 to cancel");
+			System.out.print("Which to buy? (item no. only) > ");
+
+			String choice = in.nextLine().trim();
+
+			// DEBUG
+			if (choice.matches("[0-9]+")) { // check if the String only contains numbers
+				int itemIndex = (Integer.parseInt(choice) - 1);
+
+				if (choice.equals("0")) {
+					return;
+				}
+
+				if (!(itemIndex >= p1.getInventory().size())) {
+					p1.eat((FoodItem) p1.getInventory().get(itemIndex));
+				} else {
+					System.out.println("No such item!");
+					Thread.sleep(350l);
+				}
+			} else {
+				System.out.println("Invalid input!");
+				Thread.sleep(350l);
+			}
+			// DEBUG
+		}
+	}
+
+	private static void playerInventory() throws InterruptedException {
+		while (true) {
+			clearScreen();
+			showPlayerStatus();
+	
+			System.out.println("\n" + p1.getName().toUpperCase() + "'s INVENTORY");
+			System.out.println("=========================");
+	
+			if (p1.getInventory().size() == 0) {
+				System.out.println("\tEMPTY");
+			}
+	
+			for (int i = 0; i < p1.getInventory().size(); i++) {
+				System.out.println((i + 1) + ". " + p1.getInventory().get(i));
+			}
+	
+			System.out.println("=========================");
+	
+			System.out.println("\n1. Consume Items");
+			System.out.println("0. Go Back\n");
+	
+			System.out.print("> ");
+	
+			switch (in.nextLine()) {
+				case "0":
+					return;
+				case "1":
+					consumeItem();
+					break;
+				default:
+					System.out.println("No such option!");
+					Thread.sleep(350l);
+					break;
+			}
+		}
 	}
 
 	private static void earnMoney() {
@@ -90,6 +262,10 @@ public class Game {
 
 		int salary = random.nextInt(10);
 		p1.setMoney(p1.getMoney() + salary);
+
+		clearScreen();
+		showPlayerStatus();
+
 		System.out.println("\nYou went to a weird part-time job...");
 		System.out.println("You earned " + salary + " pesos!");
 
@@ -111,7 +287,7 @@ public class Game {
 
 			switch (in.nextLine()) {
 				case "1":
-				       // food
+				       enterFoodShop();
 				       break;
 				case "2":
 				       playerInventory();
@@ -128,7 +304,7 @@ public class Game {
 					break;
 				default:
 					System.out.println("No such option!");
-					Thread.sleep(250l);
+					Thread.sleep(350l);
 					break;
 			}
 		}

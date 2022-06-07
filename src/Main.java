@@ -6,7 +6,7 @@ public class Main {
 		try {
 			Game.play();
 		} catch (InterruptedException ex) {
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA");
+			ex.printStackTrace();
 		}
 	}
 }
