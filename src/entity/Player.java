@@ -46,9 +46,15 @@ public class Player {
 		this.money = money;
 	}
 
-	public void buy(Item item, int itemPrice) {
-		money -= itemPrice;
+	public boolean buy(Item item) {
+		if (money < item.getPrice()) {
+			return false;
+		}
+
+		money -= item.getPrice();
 		getInventory().add(item);
+
+		return true;
 	}
 
 	public void eat(FoodItem food) {
