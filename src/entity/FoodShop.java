@@ -10,4 +10,9 @@ public class FoodShop extends Shop {
 		getInventory().add(food);
 	}
 
+	//DEBUG
+	public void stockBeverage(BeverageItem beverage) {
+		getInventory().add(beverage);
+	}
+
 }
