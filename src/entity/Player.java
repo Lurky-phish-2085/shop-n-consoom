@@ -57,7 +57,7 @@ public class Player {
 		return true;
 	}
 
-	public void eat(FoodItem food) {
+	private void eat(FoodItem food) {
 		int satietyLevel = food.getSatietyLevel();
 
 		if (getInventory().remove(food)) {
@@ -69,7 +69,7 @@ public class Player {
 		}
 	}
 
-	public void drink(BeverageItem beverage) {
+	private void drink(BeverageItem beverage) {
 		int quenchLevel = beverage.getQuenchLevel();
 
 		if (getInventory().remove(beverage)) {
@@ -81,4 +81,18 @@ public class Player {
 		}
 	}
 
+	public void consume(Item item) {
+		if (item instanceof FoodItem) {
+			eat((FoodItem) item);
+		} else if (item instanceof BeverageItem) {
+			drink((BeverageItem) item);
+		}
+	}
+
+	//TEMP
+	public void drain(int drainLevel) {
+		thirstLevel += drainLevel;
+		hungerLevel += drainLevel;
+	}
+	//TEMP
 }

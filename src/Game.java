@@ -13,6 +13,8 @@ public class Game {
 	static Player p1;
 	static FoodShop foodShop = new FoodShop("7-11 24/7 Shop", "Convience store for anyone!");
 	static List<FoodItem> foodItems = new ArrayList<>();
+	//DEBUG
+	static List<BeverageItem> beverages = new ArrayList<>();
 
 	public static void clearScreen() {
 		System.out.println("\033[H\033[J");
@@ -60,11 +62,18 @@ public class Game {
 		foodItems.add(new FoodItem("Nogger", "Choco goodness!", 12, 2));
 		foodItems.add(new FoodItem("Siopao Daga", "fresh from the wild rats in soft buns", 50, 15));
 		foodItems.add(new FoodItem("Chicken Meal", "Fried chicken yummy!", 70, 25));
+
+		//DEBUG
+		beverages.add(new BeverageItem("Inuman", "HAHAHA", 12, 10));
 	}
 
 	private static void stockFoodShops() {
 		for (FoodItem food : foodItems) {
 			foodShop.stockFood(food);
+		}
+		//DEBUG
+		for (BeverageItem beverage : beverages) {
+			foodShop.stockBeverage(beverage);
 		}
 	}
 
@@ -206,7 +215,7 @@ public class Game {
 				}
 
 				if (!(itemIndex >= p1.getInventory().size())) {
-					p1.eat((FoodItem) p1.getInventory().get(itemIndex));
+					p1.consume(p1.getInventory().get(itemIndex));
 				} else {
 					System.out.println("No such item!");
 					Thread.sleep(350l);
@@ -260,14 +269,30 @@ public class Game {
 		clearScreen();
 		showPlayerStatus();
 
-		int salary = random.nextInt(10);
-		p1.setMoney(p1.getMoney() + salary);
+		for (int i = 0; i < 5; i++) {
+			clearScreen();
+			showPlayerStatus();
+
+			System.out.println("\nLET'S PRETEND WE ARE WORKING BY JUST SIMPLY ANSWERING THIS ODD EVEN QUIZ :D\n");
+
+			int number = random.nextInt(1000);
+			System.out.println("NUMBER: " + number);
+			System.out.print("is it even??? [y/n] > ");
+			in.nextLine();
+		}
 
 		clearScreen();
 		showPlayerStatus();
 
+		int salary = random.nextInt(10);
+		int drainLevel = random.nextInt(5);
+		p1.setMoney(p1.getMoney() + salary);
+		p1.drain(drainLevel);
+
 		System.out.println("\nYou went to a weird part-time job...");
-		System.out.println("You earned " + salary + " pesos!");
+		System.out.println("You earned " + salary + " pesos!\n");
+
+		System.out.println("You got tired also...");
 
 		System.out.println("\nPress Enter to go back!");
 		in.nextLine();
